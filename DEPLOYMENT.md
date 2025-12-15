@@ -5,13 +5,19 @@
 - MongoDB: Connected to MongoDB Atlas
 - CORS: Configured to allow Vercel frontend
 
-## Frontend (Vercel)
-- URL: https://preferly.vercel.app
-- API Endpoint: https://preferly.onrender.com/api
+### Render Dashboard Settings
+**IMPORTANT:** You must configure these settings in the Render dashboard:
 
-## Environment Variables Required
+1. Go to https://dashboard.render.com
+2. Select your `preferly` service
+3. Go to **Settings** → **Build & Deploy**
+4. Set the following:
+   - **Build Command**: `npm run install-backend`
+   - **Start Command**: `npm start`
+   - **Root Directory**: Leave empty (or set to `.`)
 
-### Backend (.env)
+### Environment Variables (Render Dashboard)
+Set these in the Render dashboard under **Environment**:
 ```
 PORT=5000
 MONGO_URI=mongodb+srv://...
@@ -20,21 +26,25 @@ CLOUDINARY_API_KEY=...
 CLOUDINARY_API_SECRET=...
 ```
 
-### Frontend
-No environment variables needed - API URL is hardcoded in api.js
+## Frontend (Vercel)
+- URL: https://preferly.vercel.app
+- API Endpoint: https://preferly.onrender.com/api
 
-## Deployment Steps
+### Vercel Settings
+- **Framework Preset**: Vite
+- **Root Directory**: `frontend`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
 
-1. **Backend (Render)**
-   - Push code to GitHub
-   - Connect Render to repository
-   - Set environment variables in Render dashboard
-   - Deploy
+## Files Created for Deployment
 
-2. **Frontend (Vercel)**
-   - Push code to GitHub
-   - Connect Vercel to repository
-   - Deploy (automatic)
+### Root `package.json`
+Contains scripts to install and start the backend from the monorepo root:
+- `npm run install-backend` - Installs backend dependencies
+- `npm start` - Starts the backend server
+
+### `render.json`
+Render configuration (may not be needed if dashboard settings are correct)
 
 ## CORS Configuration
 Backend allows requests from:
