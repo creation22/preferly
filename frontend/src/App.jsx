@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from './components/Navbar';
 import VotePage from './pages/VotePage';
 import LeaderboardPage from './pages/LeaderboardPage';
@@ -58,6 +59,7 @@ function App() {
         <Navbar erp={erp} />
         <AnimatedRoutes erp={erp} />
       </div>
+      <Analytics />
     </Router>
   );
 }
