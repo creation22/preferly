@@ -85,13 +85,13 @@ const VotePage = ({ erp }) => {
                 </div>
             ) : (
                 <>
-                    <div className="grid grid-cols-2 md:flex md:flex-row justify-center items-center gap-3 md:gap-8 mt-6 md:mt-12 px-2 max-w-2xl mx-auto">
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 lg:gap-8 mt-6 md:mt-12 px-4 max-w-6xl mx-auto">
                         <VoteCard
                             photo={candidates.A}
                             onClick={() => handleVote('A')}
                             isLoading={loadingCard === 'A'}
                         />
-                        <div className="hidden md:block glass-card p-6 rounded-full shadow-medium">
+                        <div className="hidden lg:block glass-card p-6 rounded-full shadow-medium">
                             <div className="text-3xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
                                 <ArrowLeftRight className="text-[var(--color-coral)]" size={28} />
                                 VS
@@ -104,13 +104,13 @@ const VotePage = ({ erp }) => {
                             isLoading={loadingCard === 'B'}
                         />
                     </div>
-                    {/* Mobile VS Badge */}
-                    <div className="flex md:hidden justify-center mt-4">
-                        <div className="glass-card px-4 py-2 rounded-full shadow-medium">
-                            <div className="text-xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
-                                <ArrowLeftRight className="text-[var(--color-coral)]" size={18} />
+                    {/* Mobile/Tablet VS Badge */}
+                    <div className="flex lg:hidden justify-center mt-4">
+                        <div className="glass-card px-6 py-3 rounded-full shadow-medium">
+                            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
+                                <ArrowLeftRight className="text-[var(--color-coral)]" size={24} />
                                 VS
-                                <Sparkles className="text-[var(--color-purple)]" size={16} />
+                                <Sparkles className="text-[var(--color-purple)]" size={20} />
                             </div>
                         </div>
                     </div>

@@ -37,20 +37,24 @@ const AnimatedRoutes = ({ erp }) => {
 
 function App() {
   const [erp, setErp] = useState(localStorage.getItem('erp') || null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const handleLogin = async (newErp) => {
     try {
+      setIsLoggingIn(true);
       await registerUser(newErp);
       localStorage.setItem('erp', newErp);
       setErp(newErp);
     } catch (error) {
       console.error('Login failed', error);
       alert('Login failed, please try again.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
   if (!erp) {
-    return <LoginPage onLogin={handleLogin} />;
+    return <LoginPage onLogin={handleLogin} isLoading={isLoggingIn} />;
   }
 
   return (
