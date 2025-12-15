@@ -24,19 +24,29 @@ async function fixIndexes() {
         const indexes = await User.collection.getIndexes();
         console.log('Current indexes:', Object.keys(indexes));
 
-        // Drop the username index if it exists
-        if (indexes.username_1) {
-            console.log('Dropping username_1 index...');
-            await User.collection.dropIndex('username_1');
-            console.log('✅ Dropped username_1 index');
-        } else {
-            console.log('No username_1 index found');
+        // List of old indexes to drop
+        const oldIndexes = ['username_1', 'email_1'];
+
+        for (const indexName of oldIndexes) {
+            if (indexes[indexName]) {
+                console.log(`Dropping ${indexName} index...`);
+                try {
+                    await User.collection.dropIndex(indexName);
+                    console.log(`✅ Dropped ${indexName} index`);
+                } catch (error) {
+                    console.log(`⚠️ Could not drop ${indexName}:`, error.message);
+                }
+            }
         }
 
         // Ensure correct indexes exist
         console.log('Ensuring erp index exists...');
         await User.collection.createIndex({ erp: 1 }, { unique: true });
         console.log('✅ ERP index is set');
+
+        // Show final indexes
+        const finalIndexes = await User.collection.getIndexes();
+        console.log('\nFinal indexes:', Object.keys(finalIndexes));
 
         console.log('\n✅ Database indexes fixed!');
         process.exit(0);
