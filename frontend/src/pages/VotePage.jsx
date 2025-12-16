@@ -9,7 +9,7 @@ const VotePage = ({ erp }) => {
     const [year, setYear] = useState(1);
     const [candidates, setCandidates] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [loadingCard, setLoadingCard] = useState(null); // 'A' or 'B' or null
+    const [loadingCard, setLoadingCard] = useState(null);
     const [error, setError] = useState(null);
 
     const fetchPair = useCallback(async () => {
@@ -40,16 +40,12 @@ const VotePage = ({ erp }) => {
             const loserId = winner === 'A' ? candidates.B._id : candidates.A._id;
             const winnerPhoto = winner === 'A' ? candidates.A : candidates.B;
 
-            // Set loading state for the losing card
             setLoadingCard(loser);
 
-            // Submit vote
             await submitVote(winnerId, loserId, erp, year);
 
-            // Fetch new photo to replace the loser (exclude the winner)
             const newPhoto = await getSinglePhoto(year, winnerId);
 
-            // Update candidates: keep winner, replace loser
             if (winner === 'A') {
                 setCandidates({ A: winnerPhoto, B: newPhoto });
             } else {
@@ -65,19 +61,24 @@ const VotePage = ({ erp }) => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-2 py-6">
+            {/* Era Selector */}
             <EraSelector selectedYear={year} onSelectYear={setYear} />
 
+            {/* Error */}
             {error ? (
                 <div className="text-center mt-10 p-10 glass-card max-w-md mx-auto">
-                    <p className="font-bold text-xl text-[var(--color-coral)] mb-4">{error}</p>
+                    <p className="font-bold text-xl text-[var(--color-coral)] mb-4">
+                        {error}
+                    </p>
                     <GradientButton onClick={fetchPair} showIcon={false}>
                         <RefreshCw size={18} />
-                        Retry Connection
+                        Retry
                     </GradientButton>
                 </div>
             ) : loading || !candidates ? (
-                <div className="flex justify-center items-center h-96">
+                /* Loading */
+                <div className="flex justify-center items-center h-[60vh]">
                     <div className="font-semibold text-3xl flex items-center gap-3 text-[var(--color-purple)]">
                         <Loader2 className="animate-spin" size={32} />
                         Loading...
@@ -85,32 +86,28 @@ const VotePage = ({ erp }) => {
                 </div>
             ) : (
                 <>
-                    <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 lg:gap-8 mt-6 md:mt-12 px-4 max-w-6xl mx-auto">
+                    {/* ===== VOTE CARDS (MOBILE FIRST) ===== */}
+                    <div className="flex flex-row justify-center items-center gap-2 md:gap-6 lg:gap-8 mt-6 md:mt-12 px-2 md:px-4 max-w-6xl mx-auto">
                         <VoteCard
                             photo={candidates.A}
                             onClick={() => handleVote('A')}
                             isLoading={loadingCard === 'A'}
                         />
-                        <div className="hidden lg:block glass-card p-6 rounded-full shadow-medium">
-                            <div className="text-3xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
-                                <ArrowLeftRight className="text-[var(--color-coral)]" size={28} />
-                                VS
-                                <Sparkles className="text-[var(--color-purple)]" size={24} />
-                            </div>
-                        </div>
+
                         <VoteCard
                             photo={candidates.B}
                             onClick={() => handleVote('B')}
                             isLoading={loadingCard === 'B'}
                         />
                     </div>
-                    {/* Mobile/Tablet VS Badge */}
-                    <div className="flex lg:hidden justify-center mt-4">
+
+                    {/* ===== VS BADGE ===== */}
+                    <div className="flex justify-center mt-4">
                         <div className="glass-card px-6 py-3 rounded-full shadow-medium">
-                            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
-                                <ArrowLeftRight className="text-[var(--color-coral)]" size={24} />
+                            <div className="text-2xl font-bold bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-purple)] bg-clip-text text-transparent flex items-center gap-2">
+                                <ArrowLeftRight className="text-[var(--color-coral)]" size={22} />
                                 VS
-                                <Sparkles className="text-[var(--color-purple)]" size={20} />
+                                <Sparkles className="text-[var(--color-purple)]" size={18} />
                             </div>
                         </div>
                     </div>

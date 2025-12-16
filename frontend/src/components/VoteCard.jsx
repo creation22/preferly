@@ -5,7 +5,7 @@ import { Sparkles, Loader2 } from 'lucide-react';
 
 const VoteCard = ({ photo, onClick, isLoading = false }) => {
     return (
-        <GlassCard className="p-0 overflow-hidden w-full max-w-xl group transition-all duration-300 hover:scale-105 relative">
+        <GlassCard className="p-0 overflow-hidden w-full max-w-[280px] md:max-w-sm lg:max-w-md group transition-all duration-300 hover:scale-105 relative">
             <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <Sparkles className="text-white drop-shadow-lg" size={24} />
             </div>
