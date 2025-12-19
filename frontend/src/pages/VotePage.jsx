@@ -3,7 +3,7 @@ import VoteCard from '../components/VoteCard';
 import EraSelector from '../components/EraSelector';
 import { getPhotoPair, getSinglePhoto, submitVote } from '../api';
 import GradientButton from '../components/GradientButton';
-import { ArrowLeftRight, RefreshCw, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeftRight, RefreshCw, Loader2, Sparkles, SkipForward } from 'lucide-react';
 
 const VotePage = ({ erp }) => {
     const [year, setYear] = useState(1);
@@ -110,6 +110,14 @@ const VotePage = ({ erp }) => {
                                 <Sparkles className="text-[var(--color-purple)]" size={18} />
                             </div>
                         </div>
+                    </div>
+
+                    {/* ===== SKIP BUTTON ===== */}
+                    <div className="flex justify-center mt-4">
+                        <GradientButton onClick={fetchPair} showIcon={false}>
+                            <SkipForward size={18} />
+                            Skip Both
+                        </GradientButton>
                     </div>
                 </>
             )}
